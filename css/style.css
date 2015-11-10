@@ -1,4 +1,9 @@
-*{
-	margin: 0;
-	padding: 0;
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+.header{
+	font-family: 'Pacifico', cursive;
+}
+
+.top-margin{
+	margin: 5px auto;
 }
