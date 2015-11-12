@@ -1,15 +1,16 @@
-var init = function(){
-	this.mapProp = {
+var mapContainer = document.getElementById("googleMap");
+
+var Map = function(){
+	var mapProp = {
 		center: new google.maps.LatLng(0,0),
 		zoom: 2,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-	this.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+	this.map = new google.maps.Map(mapContainer,mapProp);
 }
 
-google.maps.event.addDomListener(window,'load',init);
-
-init.refreshMap = function(lat,lng) {
-	map.panTo(new google.maps.LatLng(lat,lng));
+var MapVM = function(){
+	this.googleMap = ko.observable(new Map());
 }
 
+ko.applyBindings(new MapVM(),mapContainer);
