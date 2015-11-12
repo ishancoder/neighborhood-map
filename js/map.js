@@ -8,9 +8,3 @@ var Map = function(){
 	};
 	this.map = new google.maps.Map(mapContainer,mapProp);
 }
-
-var MapVM = function(){
-	this.googleMap = ko.observable(new Map());
-}
-
-ko.applyBindings(new MapVM(),mapContainer);
