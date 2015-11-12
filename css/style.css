@@ -7,3 +7,7 @@
 .top-margin{
 	margin: 5px auto;
 }
+
+#googleMap{
+	height:500px;
+}
