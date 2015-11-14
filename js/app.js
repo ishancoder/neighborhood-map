@@ -9,12 +9,41 @@ var ViewModel = function(){
 	this.panTo = function() {
 		var resp;
 		var map = self.googleMap().map;
+		var infowindow = new google.maps.InfoWindow();
+
+		var createMarker = function(place) {
+			var marker = new google.maps.Marker({
+				map:map,
+				position: place.geometry.location
+			});
+
+			google.maps.event.addListener(marker,'click',function(){
+				infowindow.setContent(place.name);
+				infowindow.open(map, this);
+			})
+		}
+
+
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+self.imgAddress(), function(data){
 			resp = data.results[0].geometry.location;
 			map.panTo(resp);
-			console.log(map);
-			var bounds = new google.maps.LatLngBounds(resp);
-			map.fitBounds(bounds);
+			var request= {
+					location: resp,
+					radius: '500'
+				};
+			var service = new google.maps.places.PlacesService(map);
+			service.nearbySearch(request, function(results, status) {
+				if(status == google.maps.places.PlacesServiceStatus.OK) {
+					var bounds = new google.maps.LatLngBounds();
+					for(var i = 0 ; i < results.length; i++) {
+						var place = results[i];
+						createMarker(results[i]);
+						bounds.extend(results[i].geometry.location);
+					}
+					
+					map.fitBounds(bounds);
+				}
+			});
 		});
 	}
 }
